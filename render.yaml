@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: mf-irr-calculator
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --timeout 120 --bind 0.0.0.0:$PORT
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.11.0
+    disk:
+      name: benchmark-cache
+      mountPath: /opt/render/project/src/benchmark_data
+      sizeGB: 1
